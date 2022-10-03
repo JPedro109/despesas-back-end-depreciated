@@ -1,0 +1,9 @@
+{
+  "name": "despesas-backend",
+  "version": "1.0.0",
+  "description": "Api do despesas",
+  "main": "dist/server.js",
+  "repository": "https://github.com/JPedro109/despesas-back-end",
+  "author": "João Pedro <joaopedromoraesnsilva@gmail.com>",
+  "license": "MIT"
+}
