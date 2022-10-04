@@ -21,5 +21,5 @@
 - Node
 - Typescript
 - Nodemailer
-- Prisma
+- MongoDB
 - Jest
