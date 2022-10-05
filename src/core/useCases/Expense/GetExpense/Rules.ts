@@ -6,8 +6,6 @@ export class Rules {
 	constructor(private repository: IExpenseRepository) {}
 
 	async execute({ userId }: DTO) {
-		console.log();
-		
 		return (await this.repository.getAllExpenses(userId)).map(element => {
 			return {
 				id: element.id,
