@@ -3,8 +3,9 @@ version: "3.8"
 services:
 
   api-despesas:
-    build:
+    build: 
       context: .
+      dockerfile: Dockerfile.dev
     container_name: api-despesas
     env_file:
       - .env
