@@ -4,7 +4,7 @@
 <p>🚀  Aplicação voltada para administração de despesas</p>
 
 # Status da Aplicação
-<p>🚧 Aplicação Em Desevolvimento (faltam teste unitários, de integração e E2E)</p>
+<p>🚧 Aplicação Em Desevolvimento</p>
 
 # Features
 - Cadastro de Usuário
@@ -26,7 +26,7 @@
 
 # Execução
 
-Para executar o projeto você ter o docker, o node e o pacote yarn instalados, após clonar o projeto, use o exemplo para definir as variáveis de ambiente e digite os seguintes comandos:
+Para executar o projeto você deve ter o docker, o node e o pacote yarn instalados, após clonar o projeto, use o exemplo para definir as variáveis de ambiente e digite os seguintes comandos:
 ```sh
  yarn
 ```
