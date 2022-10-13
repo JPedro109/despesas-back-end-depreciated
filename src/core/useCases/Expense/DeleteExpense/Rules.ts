@@ -9,6 +9,6 @@ export class Rules {
 
 		await this.repository.delete(id);
 
-		return "Despesa deletada com sucesso";
+		return id;
 	}
 }
