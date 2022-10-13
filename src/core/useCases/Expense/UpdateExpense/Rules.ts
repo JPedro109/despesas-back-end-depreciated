@@ -13,6 +13,11 @@ export class Rules {
 
 		await this.repository.update(userId, id, expenseName, dueDate, price);
 
-		return "Despesa atualizada com sucesso";
+		return {
+			id,
+			expenseName,
+			price,
+			dueDate
+		};
 	}
 }
