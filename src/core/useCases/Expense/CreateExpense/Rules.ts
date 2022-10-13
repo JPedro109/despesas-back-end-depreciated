@@ -16,6 +16,10 @@ export class Rules {
 
 		await this.repository.create(userId, id, expenseName, dueDate, price);
 
-		return "Despesa criada com sucesso";
+		return {
+			expenseName, 
+			dueDate,
+			price
+		};
 	}
 }
