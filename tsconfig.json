@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "es6",
+		"target": "es2020",
 		"module": "commonjs",
 		"strict": false,
 		"strictPropertyInitialization": false,
@@ -11,10 +11,12 @@
 		"forceConsistentCasingInFileNames": true,
 		"outDir": "dist",
 		"typeRoots": [
-			"./src/@types",
-			"node_modules/@types"
+			"./src/@types"
 		],
 	},
+	"include": [
+		"src"
+	],
 	"exclude": [
 		"**/*.test.ts"
 	]
