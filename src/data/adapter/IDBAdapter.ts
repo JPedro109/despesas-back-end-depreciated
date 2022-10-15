@@ -4,5 +4,5 @@ export interface IDBAdapter<Type> {
 	getAll(where?: object, operator?: "AND" | "OR"): Promise<Type[]>;
 	update(where: object, data: object): Promise<Type>;
 	delete(where: object): Promise<Type>;
-	deleteMany(where?: object): Promise<Type>;
+	deleteMany(): Promise<Type[]>;
 }

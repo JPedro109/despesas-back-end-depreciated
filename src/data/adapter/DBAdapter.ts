@@ -100,9 +100,8 @@ export class DBAdapter<Type> implements IDBAdapter<Type> {
 		return data as Type;
 	}
     
-	async deleteMany(where?: object): Promise<Type> {
-		const data = await this.database.query(this.collection).findOne(where) as Type;
-		await this.database.query(this.collection).deleteMany(where || {});
-		return data as Type;
+	async deleteMany(): Promise<Type[]> {
+		await this.database.query(this.collection).deleteMany({});
+		return this.getAll();
 	}   
 }
