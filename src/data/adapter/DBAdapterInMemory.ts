@@ -8,7 +8,7 @@ export class DBAdapterInMemory implements IDBAdapter {
 	collection: string;
     
 	private setEntityExists(collection: string) {
-		if(!this.collection && collection) {
+		if(collection) {
 			this.collection = collection;
 		}
 	}
@@ -95,7 +95,9 @@ export class DBAdapterInMemory implements IDBAdapter {
 
 			if(!operator) {
 				for(const key in where) {
-					if(element[key] !== where[key]) data.push(element);
+					if(element[key] === where[key]) {
+						if(!data.includes(element)) data.push(element);
+					}
 				}
 			}
 		});
