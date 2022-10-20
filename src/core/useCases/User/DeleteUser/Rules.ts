@@ -1,4 +1,4 @@
-import { MissingParamError, UnauthorizedError } from "../../../../utils/error";
+import { InvalidParamError, MissingParamError, UnauthorizedError } from "../../../../utils/error";
 import { IUserRepository } from "../../../../data/repositories/UserRepository/IUserRepository";
 import { toolkit } from "../../../../utils/toolkit";
 import { DTO } from "./DTO";
@@ -10,6 +10,8 @@ export class Rules {
 	async execute({ userId, password, passwordConfirm }: DTO) {
 
 		if (!password || !passwordConfirm) throw new MissingParamError("Preencha todos os campos");
+
+		if(password !== passwordConfirm) throw new InvalidParamError("As senhas não coincidem");
 
 		const userPassword = await this.repository.getPasswordById(userId);
 
