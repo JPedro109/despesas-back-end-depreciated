@@ -1,15 +1,21 @@
-import { Database } from "../mongodb";
 import { IDBAdapter } from "./IDBAdapter";
+import { MongoClient } from "mongodb";
+import { DATABASE_NAME, MONGO_URL } from "../../config";
 
-export class DBAdapter<Type> implements IDBAdapter<Type> {
+export class DBAdapter implements IDBAdapter {
     
-	database: Database;
+	mongo: MongoClient;
 	collection: string;
 
-	constructor(collection: string){
-		this.database = new Database();
-		this.database.connect();
-		this.collection = collection;
+	constructor() {
+		this.mongo = new MongoClient(MONGO_URL);
+	}
+
+	private query(collection: string)  {
+		return this
+			.mongo
+			.db(DATABASE_NAME)
+			.collection(collection);
 	}
 
 	private mountWhere(where: object): object {
@@ -24,13 +30,34 @@ export class DBAdapter<Type> implements IDBAdapter<Type> {
 		return whereModified;
 	}
 
-	async insert(data: Type): Promise<Type> {
-		await this.database.query(this.collection).insertOne(data);
+	private setEntityExists(collection: string): void {
+		if(collection) this.collection = collection;
+	}
+
+	setEntity(collection: string): IDBAdapter {
+		this.collection = collection;
+		return this;
+	}
+
+	async connect(): Promise<void> {
+		await this.mongo.connect();
+	}
+
+	async closeConnection(): Promise<void> {
+		this.mongo.close();
+	}
+
+	async insert<Type>(data: Type, collection?: string): Promise<Type> {
+		this.setEntityExists(collection);
+		
+		await this.query(this.collection).insertOne(data);
 		return data;
 	}
 
-	async getOne(where: object, operator?: "AND" | "OR"): Promise<Type> {
-		if (Object.keys(where).length > 1) {
+	async getOne<Type>(where: object, operator?: "AND" | "OR", collection?: string): Promise<Type> {
+		this.setEntityExists(collection);
+		
+		if (where && Object?.keys(where).length > 1) {
 
 			if (!operator) throw new Error("Você precisa colocar o operador da operação");
 
@@ -38,70 +65,76 @@ export class DBAdapter<Type> implements IDBAdapter<Type> {
 
 			if (operator === "AND") {
 
-				return await this.database.query(this.collection).findOne({
+				return await this.query(this.collection).findOne({
 					$and: whereModified
 				}) as Type;
 
 			}
 
 			if (operator === "OR") {
-				return await this.database.query(this.collection).findOne({
+				return await this.query(this.collection).findOne({
 					$or: whereModified
 				}) as Type;
 			}
 		}
 
-		return await this.database.query(this.collection).findOne(where) as Type;
+		return await this.query(this.collection).findOne(where) as Type;
 	}
 
-	async getAll(where?: object, operator?: "AND" | "OR"): Promise<Type[]> {
-        
-		if (Object.keys(where).length > 1) {
+	async getAll<Type>(where?: object, operator?: "AND" | "OR", collection?: string): Promise<Type[]> {  
+		this.setEntityExists(collection);
+
+		if (where && Object?.keys(where).length > 1) {
 
 			if (!operator) throw new Error("Você precisa colocar o operador da operação");
 	
 			const whereModified = this.mountWhere(where);
 	
 			if (operator === "AND") {
-				return await this.database.query(this.collection).find({
+				return await this.query(this.collection).find({
 					$and: whereModified
 				}).toArray() as Type[];
 			}
 	
 			if (operator === "OR") {
-				return await this.database.query(this.collection).find({
+				return await this.query(this.collection).find({
 					$or: whereModified
 				}).toArray() as Type[];
 			}
 		}
 	
-		return await this.
-			database
+		return await this
 			.query(this.collection)
 			.find(where || {})
 			.toArray() as Type[];
 
 	}
 
-	async update(where: object, data: object): Promise<Type> {
-		await this.database.query(this.collection).updateOne(
+	async update<Type>(where: object, data: object, collection?: string): Promise<Type> {        
+		this.setEntityExists(collection);
+
+		await this.query(this.collection).updateOne(
 			where,
 			{
 				$set: data
 			}
 		);
 
-		return await this.database.query(this.collection).findOne(where) as Type;
+		return await this.query(this.collection).findOne(where) as Type;
 	}
 
-	async delete(where: object): Promise<Type> {
-		const data = await this.database.query(this.collection).findOne(where) as Type;
-		await this.database.query(this.collection).deleteOne(where);
+	async delete<Type>(where: object, collection?: string): Promise<Type> {        
+		this.setEntityExists(collection);
+
+		const data = await this.query(this.collection).findOne(where) as Type;
+		await this.query(this.collection).deleteOne(where);
 		return data as Type;
 	}
     
-	async deleteMany(): Promise<Type[]> {
-		await this.database.query(this.collection).deleteMany({});
-		return this.getAll();
-	}   
+	async deleteMany<Type>(collection?: string): Promise<Type[]> { 
+		this.setEntityExists(collection);
+
+		await this.query(this.collection).deleteMany({});
+		return this.getAll(null, null, this.collection);
+	}
 }
