@@ -1,5 +1,5 @@
 import { IExpenseRepository } from "../../../../data/repositories/ExpenseRepository/IExpenseRepository";
-import { MissingParamError } from "../../../../utils/error";
+import { InvalidParamError, MissingParamError } from "../../../../utils/error";
 import { DTO } from "./DTO";
 import { toolkit } from "../../../../utils/toolkit";
 
@@ -9,8 +9,10 @@ export class Rules {
 
 	async execute({ userId, expenseName, price, dueDate }: DTO) {
 
-		if(!expenseName || !dueDate || !price)
-			return new MissingParamError("Preencha todos os campos");
+		if(!expenseName)
+			return new MissingParamError("Preencha o nome da despesa");
+
+		if(price <= 0) throw new InvalidParamError("O preço deve ser maior que zero");
 
 		const id = toolkit.generation.id();
 
