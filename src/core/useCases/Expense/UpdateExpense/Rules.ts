@@ -1,5 +1,5 @@
 import { IExpenseRepository } from "../../../../data/repositories/ExpenseRepository/IExpenseRepository";
-import { MissingParamError } from "../../../../utils/error";
+import { InvalidParamError, MissingParamError } from "../../../../utils/error";
 import { DTO } from "./DTO";
 
 export class Rules {
@@ -8,8 +8,10 @@ export class Rules {
 
 	async execute({ userId, id, expenseName, price, dueDate }: DTO) {
 
-		if(!expenseName || !dueDate || !price)
-			return new MissingParamError("Preencha todos os campos");
+		if(!expenseName)
+			throw new MissingParamError("Preencha todos os campos");
+
+		if(price <= 0) throw new InvalidParamError("O preço deve ser maior que zero");
 
 		await this.repository.update(userId, id, expenseName, dueDate, price);
 
