@@ -1,6 +1,6 @@
 import { setup } from "../setup";
 import { Rules as UpdateExpense } from "../../../core/useCases/Expense/UpdateExpense/Rules";
-import { MissingParamError } from "../../../utils/error";
+import { InvalidParamError, MissingParamError } from "../../../utils/error";
 import { expenseRepository } from "../../../data/repositories/ExpenseRepository";
 
 describe("Unit Test - Update Expense", () => {
@@ -32,7 +32,7 @@ describe("Unit Test - Update Expense", () => {
 			price: 0
 		};
 		await updateExpense.execute(expense).catch(e => {
-			expect(e).toBeInstanceOf(MissingParamError);
+			expect(e).toBeInstanceOf(InvalidParamError);
 		});
 	});
 	
