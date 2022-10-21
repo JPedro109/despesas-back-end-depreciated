@@ -10,7 +10,7 @@ export class Rules {
 	async execute({ userId, expenseName, price, dueDate }: DTO) {
 
 		if(!expenseName)
-			return new MissingParamError("Preencha o nome da despesa");
+			throw new MissingParamError("Preencha o nome da despesa");
 
 		if(price <= 0) throw new InvalidParamError("O preço deve ser maior que zero");
 
