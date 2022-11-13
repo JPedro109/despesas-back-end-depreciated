@@ -2,13 +2,14 @@
   "name": "despesas-backend",
   "version": "1.0.0",
   "description": "Api do despesas",
-  "main": "dist/server.js",
+	"main": "dist/src/server.js",
   "repository": "https://github.com/JPedro109/despesas-back-end",
   "author": "João Pedro <joaopedromoraesnsilva@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --files src/server.ts",
-    "test": "jest --detectOpenHandles --silent"
+    "test": "jest --detectOpenHandles --silent",
+    "start": "tsc && node dist/src/server.js"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
