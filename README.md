@@ -4,7 +4,7 @@
 <p>🚀  Aplicação voltada para administração de despesas</p>
 
 # Status da Aplicação
-<p>🚧 Aplicação Em Desevolvimento</p>
+<p>🔥 Aplicação Finalizada</p>
 
 # Features
 - Cadastro de Usuário
@@ -37,4 +37,10 @@ Para executar o projeto você deve ter o docker, o node e o pacote yarn instalad
 Se quiser usar o projeto sem volumes, você não precisa ter instalado o node e nem o pacote yarn, somente retire a tag volumes do arquivo docker-compose.yml e use o exemplo para definir as variáveis de ambiente, depois rode o seguinte comando:
 ```sh
  docker-compose up -d
+```
+# Teste
+
+Para executar os testes, rode o seguinte comando:
+```sh
+docker exec -i api-despesas yarn test
 ```
