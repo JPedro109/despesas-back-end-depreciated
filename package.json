@@ -2,7 +2,7 @@
   "name": "despesas-backend",
   "version": "1.0.0",
   "description": "Api do despesas",
-	"main": "dist/src/server.js",
+  "main": "dist/src/server.js",
   "repository": "https://github.com/JPedro109/despesas-back-end",
   "author": "João Pedro <joaopedromoraesnsilva@gmail.com>",
   "license": "MIT",
@@ -27,7 +27,7 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "@jpmnsdeveloper/toolkit": "^1.0.3",
+    "@jpmnsdeveloper/toolkit": "^1.0.4",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "mongodb": "^4.10.0",
