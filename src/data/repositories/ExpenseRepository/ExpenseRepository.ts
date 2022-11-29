@@ -16,6 +16,10 @@ export class ExpenseRepository implements IExpenseRepository {
 		});
 	}
 
+	async getOne(id: string): Promise<Expense> {
+		return await this.adapter.setEntity("expense").getOne<Expense>({ id });
+	}
+
 	async getAllExpenses(userId: string): Promise<Expense[]> {
 		return await this.adapter.setEntity("expense").getAll<Expense>({ user_id: userId }) as Expense[];
 	}
