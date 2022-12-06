@@ -1,6 +1,7 @@
 import { IRequestRouters } from "../../../adapter/interfaces/IRequestRouters";
 import { ok } from "../../../adapter/adapterResponse";
 import { sendUserEmailUpdateLink } from "./Factory";
+import { DTO } from "./DTO";
 
 export default new class SendUserEmailUpdateLinkController {
 
@@ -9,7 +10,9 @@ export default new class SendUserEmailUpdateLinkController {
 
 		const userId = request.userId;
 
-		const response = await sendUserEmailUpdateLink.execute({ email, userId });
+		const dto = new DTO(userId, email);
+
+		const response = await sendUserEmailUpdateLink.execute(dto);
 
 		return ok(response);
 	}

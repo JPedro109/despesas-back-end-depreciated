@@ -1,49 +1,11 @@
 import { setup } from "../setup";
 import { Rules as UserLogin  } from "../../../core/useCases/User/UserLogin/Rules";
-import { UnauthorizedError, MissingParamError } from "../../../utils/error";
+import { UnauthorizedError } from "../../../utils/error";
 import { userRepositoryInMemory } from "../Mock";
 
 describe("Unit Test - User Login", () => {
 
 	setup();
-
-	test("Should not return the token, because the email field is empty", async () => {
-
-		const userLoginEmailRules = new UserLogin(userRepositoryInMemory);
-
-		const user = {
-			email: "",
-			password: "Password1234"
-		};
-		await userLoginEmailRules.execute(user).catch(e => {
-			expect(e).toBeInstanceOf(MissingParamError);
-		});
-	});
-
-	test("Should not return the token, because the password field is empty", async () => {
-		const userLoginEmailRules = new UserLogin(userRepositoryInMemory);
-
-		const user = {
-			email: "emailVERIFIED@test.com",
-			password: ""
-		};
-		await userLoginEmailRules.execute(user).catch(e => {
-			expect(e).toBeInstanceOf(MissingParamError);
-		});
-	});
-
-	test("Should not return the token, because all fields are empty", async () => {
-
-		const userLoginEmailRules = new UserLogin(userRepositoryInMemory);
-
-		const user = {
-			email: "",
-			password: ""
-		};
-		await userLoginEmailRules.execute(user).catch(e => {
-			expect(e).toBeInstanceOf(MissingParamError);
-		});
-	});
 
 	test("Should not return the token, because the email is incorrect", async () => {
 

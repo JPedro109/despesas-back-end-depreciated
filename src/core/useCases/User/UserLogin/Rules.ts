@@ -1,4 +1,4 @@
-import { MissingParamError, UnauthorizedError } from "../../../../utils/error";
+import { UnauthorizedError } from "../../../../utils/error";
 import { IUserRepository } from "../../../../data/repositories/UserRepository/IUserRepository";
 import { toolkit } from "../../../../utils/toolkit";
 import { DTO } from "./DTO";
@@ -8,8 +8,6 @@ export class Rules {
 	constructor(private repository: IUserRepository) { }
 
 	async execute({ email, password }: DTO) {
-		if (!email || !password) throw new MissingParamError("Preencha todos os campos");
-
 		const emailAlredyExists = await this.repository.findEmailByEmail(email);
 
 		if (!emailAlredyExists) throw new UnauthorizedError("Email/Senha Incorreto(s)");

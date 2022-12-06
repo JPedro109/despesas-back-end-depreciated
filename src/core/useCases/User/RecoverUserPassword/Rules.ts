@@ -1,4 +1,4 @@
-import { InvalidParamError, MissingParamError, PasswordInvalidError } from "../../../../utils/error";
+import { InvalidParamError } from "../../../../utils/error";
 import { IUserRepository } from "../../../../data/repositories/UserRepository/IUserRepository";
 import { toolkit } from "../../../../utils/toolkit";
 import { DTO } from "./DTO";
@@ -7,8 +7,7 @@ export class Rules {
 
 	constructor(private repository: IUserRepository) { }
 
-	async execute({ email, password, passwordConfirm, token }: DTO) {
-		if (!password || !passwordConfirm || !email || !token) throw new MissingParamError("Preencha todos os campos");
+	async execute({ email, password, token }: DTO) {
 
 		const userToken = await this.repository.getVerificationTokenByEmail(email);
 
@@ -23,12 +22,6 @@ export class Rules {
 		const passwordCompare = toolkit.password.comparePasswordEncrypt(password, userPassword);
 
 		if (passwordCompare) throw new InvalidParamError("A sua nova senha não pode ser igual a anterior");
-
-		const passwordIsValid = toolkit.validation.password(password);
-
-		if (!passwordIsValid) throw new PasswordInvalidError();
-
-		if (password !== passwordConfirm) throw new InvalidParamError("As senhas não coincidem");
 
 		const hashPassword = toolkit.password.encryptPassword(password);
 

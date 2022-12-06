@@ -1,5 +1,5 @@
 import { APP_URL } from "../../../../config";
-import { InvalidParamError, MissingParamError, PasswordInvalidError } from "../../../../utils/error";
+import { InvalidParamError } from "../../../../utils/error";
 import { IUserRepository } from "../../../../data/repositories/UserRepository/IUserRepository";
 import { toolkit } from "../../../../utils/toolkit";
 import { DTO } from "./DTO";
@@ -8,17 +8,9 @@ export class Rules {
 
 	constructor(private repository: IUserRepository) { }
 
-	async execute({ email, password, passwordConfirm }: DTO) {
-
-		if (!email || !password || !passwordConfirm) throw new MissingParamError("Preencha todos os campos");
+	async execute({ email, password }: DTO) {
 
 		if (await this.repository.findEmailByEmail(email)) throw new InvalidParamError("Email já cadastrado");
-
-		const passwordIsValid = toolkit.validation.password(password);
-
-		if (!passwordIsValid) throw new PasswordInvalidError();
-
-		if (password !== passwordConfirm) throw new InvalidParamError("As senhas não coincidem");
 
 		const id = toolkit.generation.id();
 

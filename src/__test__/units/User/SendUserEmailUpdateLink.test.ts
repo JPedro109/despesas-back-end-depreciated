@@ -1,24 +1,12 @@
 import { setup } from "../setup";
 import { Rules as SendUserEmailUpdateLink } from "../../../core/useCases/User/SendUserEmailUpdateLink/Rules";
-import { MissingParamError, InvalidParamError } from "../../../utils/error";
+import { InvalidParamError } from "../../../utils/error";
 import { userRepositoryInMemory } from "../Mock";
 import { toolkit } from "../../../utils/toolkit";
 
 describe("Unit Test - Send User Email Update Link", () => {
 
 	setup();
-
-	test("Should not send email update link, because the email field is empty", async () => {
-		const sendUserEmailUpdateLink = new SendUserEmailUpdateLink(userRepositoryInMemory);
-
-		const user = {
-			userId: "1",
-			email: ""
-		};
-		await sendUserEmailUpdateLink.execute(user).catch(e => {
-			expect(e).toBeInstanceOf(MissingParamError);
-		});
-	});
 
 	test("Should not send email update link, because the email alredy was registered", async () => {
 		const sendUserEmailUpdateLink = new SendUserEmailUpdateLink(userRepositoryInMemory);

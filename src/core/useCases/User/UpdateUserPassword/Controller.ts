@@ -1,6 +1,7 @@
 import { IRequestRouters } from "../../../adapter/interfaces/IRequestRouters";
 import { ok } from "../../../adapter/adapterResponse";
 import { updateUserPassword } from "./Factory";
+import { DTO } from "./DTO";
 
 export default new class UpdateUserPasswordController {
 
@@ -9,7 +10,9 @@ export default new class UpdateUserPasswordController {
 
 		const userId = request.userId;
 
-		const response = await updateUserPassword.execute({ userId, password, passwordConfirm, passwordCurrent });
+		const dto = new DTO(userId, passwordCurrent, password, passwordConfirm);
+
+		const response = await updateUserPassword.execute(dto);
 
 		return ok(response);
 	}
