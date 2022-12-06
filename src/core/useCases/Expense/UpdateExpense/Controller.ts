@@ -1,6 +1,7 @@
 import { IRequestRouters } from "../../../adapter/interfaces/IRequestRouters";
 import { ok } from "../../../adapter/adapterResponse";
 import { updateExpense } from "./Factory";
+import { DTO } from "./DTO";
 
 export default new class UpdateExpenseController {
 
@@ -11,7 +12,9 @@ export default new class UpdateExpenseController {
 
 		const userId = request.userId;
 
-		const response = await updateExpense.execute({ userId, id, expenseName, price, dueDate });
+		const dto = new DTO(userId, id, expenseName, dueDate, price);
+
+		const response = await updateExpense.execute(dto);
 
 		return ok(response);
 	}

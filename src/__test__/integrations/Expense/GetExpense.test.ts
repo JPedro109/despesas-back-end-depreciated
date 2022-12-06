@@ -2,7 +2,7 @@ import { setup } from "../setup";
 import { Rules as GetExpense } from "../../../core/useCases/Expense/GetExpense/Rules";
 import { expenseRepository } from "../../../data/repositories/ExpenseRepository";
 
-describe("Unit Test - Get Expense", () => {
+describe("Integration Test - Get Expense", () => {
 
 	setup();
 

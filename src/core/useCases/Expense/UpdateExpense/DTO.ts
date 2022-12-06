@@ -1,7 +1,24 @@
-export interface DTO {
-    userId: string;
-    id: string;
-    expenseName: string;
-    dueDate: Date;
-    price: number;
+import { InvalidParamError, MissingParamError } from "../../../../utils/error";
+
+export class DTO {
+	constructor(
+        public userId: string,
+        public id: string,
+        public expenseName: string,
+        public dueDate: Date,
+        public price: number
+	) {
+		if(!userId || !expenseName || !dueDate || price === undefined || !id) 
+			throw new MissingParamError("Preencha todos os campos");
+
+		if(
+			typeof userId !== "string" || 
+			typeof id !== "string" || 
+            typeof expenseName !== "string" || 
+            !(new Date(dueDate) instanceof Date) || 
+            typeof price !== "number"
+		) throw new InvalidParamError("Os tipos dos campos estão incorretos");
+
+		if(price <= 0) throw new InvalidParamError("O preço deve ser maior que zero");
+	}
 }

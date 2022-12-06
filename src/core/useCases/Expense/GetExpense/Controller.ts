@@ -1,6 +1,7 @@
 import { IRequestRouters } from "../../../adapter/interfaces/IRequestRouters";
 import { ok } from "../../../adapter/adapterResponse";
 import { getExpense } from "./Factory";
+import { DTO } from "./DTO";
 
 export default new class GetExpenseController {
 
@@ -8,7 +9,9 @@ export default new class GetExpenseController {
 
 		const userId = request.userId;
 
-		const response = await getExpense.execute({ userId });
+		const dto = new DTO(userId);
+
+		const response = await getExpense.execute(dto);
 
 		return ok(response);
 	}
