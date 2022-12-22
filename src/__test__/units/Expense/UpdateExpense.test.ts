@@ -1,41 +1,12 @@
 import { setup } from "../setup";
 import { Rules as UpdateExpense } from "../../../core/useCases/Expense/UpdateExpense/Rules";
-import { InvalidParamError, MissingParamError } from "../../../utils/error";
+import { MissingParamError } from "../../../utils/error";
 import { expenseRepositoryInMemory } from "../Mock";
 
 describe("Unit Test - Update Expense", () => {
 
 	setup();
 
-	test("Should not update expense, because expense name field is empty", async () => {
-
-		const updateExpense = new UpdateExpense(expenseRepositoryInMemory);
-		const expense = {
-			userId: "1",
-			id: "1",
-			expenseName: "",
-			dueDate: new Date("2027-08-20"),
-			price: 925
-		};
-		await updateExpense.execute(expense).catch(e => {
-			expect(e).toBeInstanceOf(MissingParamError);
-		});
-	});
-	
-	test("Should not update expense, because the price is invalid", async () => {
-		const updateExpense = new UpdateExpense(expenseRepositoryInMemory);
-		const expense = {
-			userId: "1",
-			id: "1",
-			expenseName: "Aluguel",
-			dueDate: new Date("2027-08-20"),
-			price: 0
-		};
-		await updateExpense.execute(expense).catch(e => {
-			expect(e).toBeInstanceOf(InvalidParamError);
-		});
-	});
-	
 	test("Should update expense", async () => {
 	
 		const updateExpense = new UpdateExpense(expenseRepositoryInMemory);

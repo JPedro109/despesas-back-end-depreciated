@@ -190,7 +190,7 @@ export const paths = {
 			responses: {
 				
 				200: {
-					description: "Sucesso na autentificação do usuário",
+					description: "Sucesso no envio do link",
 					schema: responseSchema
 				},
 	
@@ -250,7 +250,7 @@ export const paths = {
 			responses: {
 				
 				200: {
-					description: "Sucesso na confirmação do e-mail",
+					description: "Sucesso na recuperação da senha",
 					schema: responseSchema
 				},
 	
@@ -292,7 +292,7 @@ export const paths = {
 			responses: {
 				
 				200: {
-					description: "Sucesso no token de confirmação de atualização de e-mail",
+					description: "Sucesso no envio do link",
 					schema: responseSchema
 				},
 	
@@ -337,7 +337,7 @@ export const paths = {
 			responses: {
 				
 				200: {
-					description: "Sucesso no confirmação da atualização do e-mail",
+					description: "Sucesso na atualização do e-mail",
 					schema: responseSchema
 				},
 	
@@ -448,7 +448,7 @@ export const paths = {
 			responses: {
 				
 				200: {
-					description: "Sucesso na exclusão do senha do usuário",
+					description: "Sucesso na exclusão do usuário",
 					schema: responseSchema
 				},
 	

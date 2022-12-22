@@ -1,6 +1,7 @@
 import { IRequestRouters } from "../../../adapter/interfaces/IRequestRouters";
 import { ok } from "../../../adapter/adapterResponse";
 import { deleteUser } from "./Factory";
+import { DTO } from "./DTO";
 
 export default new class DeleteUserController {
 
@@ -9,7 +10,9 @@ export default new class DeleteUserController {
 
 		const userId = request.userId;
 
-		const response = await deleteUser.execute({ userId, password, passwordConfirm });
+		const dto = new DTO(userId, password, passwordConfirm);
+
+		const response = await deleteUser.execute(dto);
 
 		return ok(response);
 	}

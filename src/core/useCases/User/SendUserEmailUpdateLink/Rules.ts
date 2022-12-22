@@ -1,5 +1,5 @@
 import { APP_URL, TOKEN_EXPIRY_TIME } from "../../../../config";
-import { InvalidParamError, MissingParamError } from "../../../../utils/error";
+import { InvalidParamError } from "../../../../utils/error";
 import { IUserRepository } from "../../../../data/repositories/UserRepository/IUserRepository";
 import { toolkit } from "../../../../utils/toolkit";
 import { DTO } from "./DTO";
@@ -9,8 +9,6 @@ export class Rules {
 	constructor(private repository: IUserRepository) { }
 
 	async execute({ userId, email }: DTO) {
-		if (!email) throw new MissingParamError("Preencha o campo email");
-
 		const emailIsRegistered = await this.repository.findEmailByEmail(email);
 
 		if (emailIsRegistered) throw new InvalidParamError("Email já cadastrado");

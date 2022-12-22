@@ -3,7 +3,7 @@ import { Rules as DeleteExpense } from "../../../core/useCases/Expense/DeleteExp
 import { expenseRepository } from "../../../data/repositories/ExpenseRepository";
 import { NotFoundError } from "../../../utils/error";
 
-describe("Unit Test - Delete Expense", () => {
+describe("Integration Test - Delete Expense", () => {
 
 	setup();
 

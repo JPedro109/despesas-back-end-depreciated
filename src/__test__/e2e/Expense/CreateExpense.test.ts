@@ -2,7 +2,7 @@ import { setup } from "../setup";
 import request from "supertest";
 import app from "../../../app";
 
-describe("Unit Test - Create Expense", () => {
+describe("E2E Test - Create Expense", () => {
 
 	setup();
 

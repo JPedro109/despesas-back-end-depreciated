@@ -1,47 +1,11 @@
 import { setup } from "../setup";
 import { Rules as VerifyUserEmail  } from "../../../core/useCases/User/VerifyUserEmail/Rules";
-import { InvalidParamError, MissingParamError } from "../../../utils/error";
+import { InvalidParamError } from "../../../utils/error";
 import { userRepository } from "../../../data/repositories/UserRepository";
 
 describe("Integration Test - Verify Email User", () => {
 
 	setup();
-
-	test("Should not verify email, because the email field is empty", async () => {
-		const verifyUserEmailRules = new VerifyUserEmail(userRepository);
-
-		const user = {
-			email: "",
-			token: "token"
-		};
-		await verifyUserEmailRules.execute(user).catch(e => {
-			expect(e).toBeInstanceOf(MissingParamError);
-		});
-	});
-
-	test("Should not verify email, because the token field is empty", async () => {
-		const verifyUserEmailRules = new VerifyUserEmail(userRepository);
-
-		const user = {
-			email: "emailVERIFIED@test.com",
-			token: ""
-		};
-		await verifyUserEmailRules.execute(user).catch(e => {
-			expect(e).toBeInstanceOf(MissingParamError);
-		});
-	});
-
-	test("Should not verify email, because all fields are empty", async () => {
-		const verifyUserEmailRules = new VerifyUserEmail(userRepository);
-
-		const user = {
-			email: "",
-			token: ""
-		};
-		await verifyUserEmailRules.execute(user).catch(e => {
-			expect(e).toBeInstanceOf(MissingParamError);
-		});
-	});
 
 	test("Should not verify email, because the email alredy was verified", async () => {
 		const verifyUserEmailRules = new VerifyUserEmail(userRepository);
