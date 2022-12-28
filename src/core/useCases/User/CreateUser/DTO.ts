@@ -12,6 +12,10 @@ export class DTO {
 		if(typeof email !== "string" || typeof password !== "string" || typeof passwordConfirm !== "string")
 			throw new InvalidParamError("Os tipos dos campos estão incorretos");
 			
+		const emailValid = toolkit.validation.email(email);
+
+		if(!emailValid) throw new InvalidParamError("Coloque um e-mail válido");
+		
 		const passwordIsValid = toolkit.validation.password(password);
 
 		if (!passwordIsValid) throw new PasswordInvalidError();
