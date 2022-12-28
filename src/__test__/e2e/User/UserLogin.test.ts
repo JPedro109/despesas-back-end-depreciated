@@ -46,6 +46,19 @@ describe("E2E Test - User Login", () => {
 		expect(response.body.code).toBe("MissingParamError");
 	});
 
+	test("Should not return the token, because the email is invalid", async () => {
+		const user = {
+			email: "emailISNtest.com",
+			password: "Password1234"
+		};
+		const response = await request(app)
+			.post("/user/login")
+			.send(user);
+
+		expect(response.statusCode).toBe(401);
+		expect(response.body.code).toBe("UnauthorizedError");
+	});
+
 	test("Should not return the token, because the email is incorrect", async () => {
 		const user = {
 			email: "emailISNOTEXISTS@test.com",
