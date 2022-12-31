@@ -1,4 +1,5 @@
-import { InvalidParamError, MissingParamError } from "../../../../utils/error";
+import { InvalidParamError, MissingParamError, UnauthorizedError } from "../../../../utils/error";
+import { toolkit } from "../../../../utils/toolkit";
 
 export class DTO {
 	constructor(public email: string, public password: string) {
@@ -6,5 +7,9 @@ export class DTO {
 
 		if(typeof email !== "string" || typeof password !== "string") 
 			throw new InvalidParamError("Os tipos dos campos estão incorretos");
+
+		const emailValid = toolkit.validation.email(email);
+
+		if (!emailValid) throw new UnauthorizedError("Email/Senha Incorreto(s)");
 	}
 }

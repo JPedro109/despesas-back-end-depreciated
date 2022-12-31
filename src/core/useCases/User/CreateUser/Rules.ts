@@ -18,13 +18,13 @@ export class Rules {
 
 		const hashPassword = toolkit.password.encryptPassword(password);
 
-		await this.repository.store(id, email, hashPassword, token);
-
 		await toolkit.email.sendMail(email, "Validação de Email", "createUser", {
 			appUrl: APP_URL,
 			email: email,
 			token: token
 		});
+		
+		await this.repository.store(id, email, hashPassword, token);
 
 		return email;
 	}

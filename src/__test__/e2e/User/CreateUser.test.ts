@@ -66,6 +66,22 @@ describe("E2E Test - Create User", () => {
 		expect(response.body.code).toBe("MissingParamError");
 	});
 
+	test("Should not create the user, because the email is invalid", async () => {
+    
+		const user = {
+			email: "emailVtest.com",
+			password: "Password1234",
+			passwordConfirm: "Password1234",
+		};
+
+		const response = await request(app)
+			.post("/user/create")
+			.send(user);
+
+		expect(response.statusCode).toBe(400);
+		expect(response.body.code).toBe("InvalidParamError");
+	});
+
 	test("Should not create the user, because the email already was registered", async () => {
     
 		const user = {

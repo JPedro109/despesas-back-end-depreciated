@@ -26,6 +26,26 @@ describe("E2E Test - Send User Email Update Link", () => {
 		expect(response.body.code).toBe("MissingParamError");
 	});
 
+	test("Should not create the user, because the email is invalid", async () => {
+		const user = {
+			email: "emailISNOtest.com"
+		};
+
+		const token = await request(app)
+			.post("/user/login")
+			.send({
+				email: "emailVERIFIED@test.com",
+				password: "Password1234"
+			});
+		const response = await request(app)
+			.post("/user/email/send-token-update-email")
+			.set("Authorization", `Bearer ${token.body.response.accessToken}`)
+			.send(user);
+
+		expect(response.statusCode).toBe(400);
+		expect(response.body.code).toBe("InvalidParamError");
+	});
+
 	test("Should not send email update link, because the email alredy was registered", async () => {
 		const user = {
 			email: "emailISNOTVERIFIED@test.com"
